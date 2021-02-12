@@ -1,7 +1,9 @@
 {
   "name": "vrcx",
-  "main": "./assets/main.js",
   "version": "0.0.0",
+  "author": "pypy <git@pypy.moe>",
+  "description": "manage your friendship of VRChat",
+  "main": "./assets/main.js",
   "scripts": {
     "start": "electron . --enable-logging",
     "dev": "npm run development",
@@ -21,7 +23,6 @@
   "keywords": [
     "vrchat"
   ],
-  "author": "pypy <git@pypy.moe>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pypy-vrc/VRCX/issues"
