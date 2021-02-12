@@ -1,0 +1,63 @@
+{
+  "name": "vrcx",
+  "main": "./assets/main.js",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "electron . --enable-logging",
+    "dev": "npm run development",
+    "development": "mix",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pypy-vrc/VRCX.git"
+  },
+  "keywords": [
+    "vrchat"
+  ],
+  "author": "pypy <git@pypy.moe>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pypy-vrc/VRCX/issues"
+  },
+  "homepage": "https://github.com/pypy-vrc/VRCX#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "electron": "^11.2.3",
+    "electron-builder": "^22.9.1",
+    "html-webpack-plugin": "^5.1.0",
+    "laravel-mix": "^6.0.11",
+    "pug-loader": "^2.4.0",
+    "resolve-url-loader": "^3.1.2",
+    "sass": "^1.32.7",
+    "sass-loader": "^8.0.2",
+    "vue-loader": "^15.9.5",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "build": {
+    "appId": "moe.pypy.vrcx",
+    "productName": "VRCX",
+    "copyright": "Copyright © 2021 pypy",
+    "files": [
+      "assets/*",
+      "node_modules/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "asar": false,
+    "win": {
+      "target": "zip"
+    }
+  }
+}
