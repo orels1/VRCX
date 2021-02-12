@@ -1,5 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 
+// for better performance to offscreen rendering
+app.disableHardwareAcceleration();
+
 function createWindow() {
     var mainWindow = new BrowserWindow({
         width: 800,
