@@ -20,6 +20,7 @@ mix.override(function (webpackConfig) {
     }));
 });
 
+mix.copyDirectory('resources/', 'assets/');
 mix.js('src/js/main.js', 'assets/');
 mix.js('src/js/app.js', 'assets/').vue();
 mix.sass('src/css/app.scss', 'assets/');
