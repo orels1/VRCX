@@ -69,6 +69,7 @@ module.exports = {
         'prefer-arrow-callback': 0,
         'prefer-destructuring': 0,
         'prefer-named-capture-group': 0,
+        'prefer-template': 0,
         'quotes': [
             'error',
             'single',
