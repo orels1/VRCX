@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron');
 const axios = require('axios');
-// const Vue = require('vue');
+import Vue from 'vue';
+import app from '../vue/app.vue';
 
 const api = axios.create({
     baseURL: 'https://api.vrchat.cloud/api/1/',
@@ -12,6 +13,13 @@ ipcRenderer.invoke('vrcx', 'invoke'); // Promise<any>
 
 ipcRenderer.on('vrcx', function (events, ...args) {
     console.log('ipcRenderer.on(vrcx)', args);
+});
+
+window.$app = new Vue({
+    el: '#app',
+    components: {
+        app
+    }
 });
 
 (async function () {
