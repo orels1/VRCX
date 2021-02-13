@@ -25,9 +25,4 @@ mix.js('src/js/main.js', 'assets/');
 mix.js('src/js/app.js', 'assets/').vue();
 mix.sass('src/css/app.scss', 'assets/');
 
-mix.extract([
-    'axios',
-    'vue'
-], 'assets/');
-
 mix.dump();
