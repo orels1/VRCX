@@ -6,7 +6,7 @@
   "main": "assets/main.js",
   "scripts": {
     "start": "electron . --enable-logging",
-    "rebuild": "electron-rebuild -w better-sqlite3",
+    "rebuild": "electron-rebuild -w vrcx-native,better-sqlite3",
     "dev": "npm run development",
     "development": "mix",
     "hot": "mix watch --hot",
@@ -32,6 +32,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "better-sqlite3": "^7.1.2",
+    "vrcx-native": "github:pypy-vrc/vrcx-native",
     "vue": "^2.6.12"
   },
   "devDependencies": {
