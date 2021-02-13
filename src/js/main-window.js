@@ -68,7 +68,7 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: true,
             // sandbox: true,
-            partition: 'persist:vrcx',
+            // partition: 'persist:vrcx',
             defaultEncoding: 'utf-8',
             spellcheck: false
         }
