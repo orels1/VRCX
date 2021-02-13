@@ -1,6 +1,6 @@
-import { ipcRenderer } from 'electron';
-import axios from 'axios';
-import Vue from 'vue';
+const { ipcRenderer } = require('electron');
+const axios = require('axios');
+// const Vue = require('vue');
 
 const api = axios.create({
     baseURL: 'https://api.vrchat.cloud/api/1/',
