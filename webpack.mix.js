@@ -10,7 +10,15 @@ mix.webpackConfig({
 mix.override(function (webpackConfig) {
     webpackConfig.module.rules.push({
         test: /\.pug$/,
-        use: 'pug-loader'
+        oneOf: [
+            {
+                resourceQuery: /^\?vue/,
+                use: ['pug-plain-loader']
+            },
+            {
+                use: 'pug-loader'
+            }
+        ]
     });
     webpackConfig.plugins.push(new HtmlWebpackPlugin({
         filename: 'assets/index.html',
