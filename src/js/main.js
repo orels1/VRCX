@@ -3,6 +3,11 @@ const { APP_NAME } = require('./constants');
 const { createMainWindow, activateMainWindow } = require('./main-window');
 const { createTrayMenu, destroyTrayMenu } = require('./tray-menu');
 
+const native = require('vrcx-native');
+
+console.log('sample', native.sample());
+console.log('sum', native.sum(1, 2, 3, 4, 5, '6'));
+
 (function () {
     app.setName(APP_NAME);
     app.setAppUserModelId('moe.pypy.vrcx');
