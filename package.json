@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "manage your friendship of VRChat",
   "author": "pypy <git@pypy.moe>",
-  "main": "./assets/main.js",
+  "main": "assets/main.js",
   "scripts": {
     "start": "electron . --enable-logging",
     "rebuild": "electron-rebuild -w better-sqlite3 -p",
@@ -60,7 +60,7 @@
     "directories": {
       "buildResources": "assets"
     },
-    "asar": false,
+    "asar": true,
     "win": {
       "target": "zip"
     }
