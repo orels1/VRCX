@@ -35,7 +35,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "better-sqlite3": "^7.1.2",
-    "vrcx-native": "github:pypy-vrc/vrcx-native"
+    "vrcx-native": "github:pypy-vrc/vrcx-native",
+    "vue": "^3.0.6"
   },
   "devDependencies": {
     "electron": "^11.3.0",
