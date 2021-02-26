@@ -1,5 +1,5 @@
 const { app, BrowserWindow, screen, shell } = require('electron');
-const { APP_NAME, APP_ICON } = require('./constants');
+const { APP_NAME, APP_PRELOAD_JS, APP_ICON } = require('./constants');
 const interceptWebRequest = require('./intercept-webrequest');
 
 /** @type {?BrowserWindow} */
@@ -66,8 +66,7 @@ function createMainWindow() {
         // frame: false,
         titleBarStyle: (process.platform === 'darwin') ? 'hiddenInset' : 'default',
         webPreferences: {
-            nodeIntegration: true,
-            // sandbox: true,
+            preload: APP_PRELOAD_JS,
             // partition: 'persist:vrcx',
             defaultEncoding: 'utf-8',
             spellcheck: false
