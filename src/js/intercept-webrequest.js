@@ -1,39 +1,34 @@
 module.exports = function(webRequest) {
-    webRequest.onBeforeSendHeaders(
-        {
-            urls: ['*://api.vrchat.cloud/*'],
-        },
-        function(details, callback) {
-            var { requestHeaders } = details;
+    var filter = {
+        urls: ['https://api.vrchat.cloud/*'],
+    };
 
-            requestHeaders['Cache-Control'] = 'no-cache';
+    webRequest.onBeforeSendHeaders(filter, function(details, callback) {
+        var { requestHeaders } = details;
 
-            callback({
-                cancel: false,
-                requestHeaders,
-            });
-        }
-    );
-    webRequest.onHeadersReceived(
-        {
-            urls: ['*://api.vrchat.cloud/*'],
-        },
-        function(details, callback) {
-            var { responseHeaders } = details;
+        requestHeaders['Cache-Control'] = 'no-cache';
 
-            if ('set-cookie' in responseHeaders) {
-                var setCookies = responseHeaders['set-cookie'];
-                for (var i = setCookies.length - 1; i >= 0; --i) {
-                    setCookies[i] = setCookies[i].replace(/; SameSite=(Strict|Lax|None)/gi, '') + '; SameSite=None';
-                }
+        callback({
+            cancel: false,
+            requestHeaders,
+        });
+    });
+
+    webRequest.onHeadersReceived(filter, function(details, callback) {
+        var { responseHeaders } = details;
+
+        if ('set-cookie' in responseHeaders) {
+            var setCookies = responseHeaders['set-cookie'];
+            for (var i = setCookies.length - 1; i >= 0; --i) {
+                setCookies[i] = setCookies[i].replace(/; SameSite=(Strict|Lax)/gi, '') + '; SameSite=None';
             }
-
-            responseHeaders['access-control-allow-origin'] = ['*'];
-
-            callback({
-                cancel: false,
-                responseHeaders,
-            });
         }
-    );
+
+        responseHeaders['access-control-allow-origin'] = ['*'];
+
+        callback({
+            cancel: false,
+            responseHeaders,
+        });
+    });
 };
