@@ -1,3 +1,3 @@
-start "watch-main" npm run watch-main
-start "watch-preload" npm run watch-preload
-start "watch-renderer" npm run watch-renderer
+start "" npm run watch:main
+start "" npm run watch:preload
+start "" npm run watch:renderer
