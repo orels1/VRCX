@@ -1,29 +1,34 @@
 <template lang="pug">
-div.app
-    h1 {{ greeting }} Vue
-    p {{ now }}
-    button(type="button" @click="handleButton") handle
+h1 {{ greeting }} Vue
+p {{ now }}
+button(type="button" @click="handleButton") handle
 </template>
 
 <script>
+import { ref, computed, reactive, toRefs, onMounted } from 'vue';
+
 export default {
-    data() {
-        return {
+    setup(props, { attrs, slots, emit }) {
+        var now = ref(0);
+        var state = reactive({
             greeting: 'Hello',
-            now: '',
+            now: computed(function () {
+                return new Date(now.value).toJSON();
+            }),
+        });
+        onMounted(function () {
+            (function update() {
+                now.value = Date.now();
+                setTimeout(update, 1000);
+            })();
+        });
+        return {
+            ...toRefs(state),
+            handleButton() {
+                state.greeting = 'SEX';
+                window.sex();
+            },
         };
-    },
-    created() {
-        var self = this;
-        (function update() {
-            self.now = new Date().toJSON();
-            setTimeout(update, 1000);
-        })();
-    },
-    methods: {
-        handleButton() {
-            window.sex();
-        },
     },
 };
 </script>
