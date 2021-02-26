@@ -16,6 +16,7 @@
     "dev-renderer": "mix --mix-config=webpack.mix.renderer.js",
     "prod-renderer": "mix --production --mix-config=webpack.mix.renderer.js",
     "watch-renderer": "mix watch --mix-config=webpack.mix.renderer.js",
+    "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
