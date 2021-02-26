@@ -21,11 +21,10 @@ function handleMoveOrResize() {
 function handleShow() {
     // ensure window is on a display
     var { x: winX, y: winY } = window_.getBounds();
-    for (var { bounds: { x, y, width, height } } of screen.getAllDisplays()) {
-        if (winX >= x &&
-            winX <= x + width &&
-            winY >= y &&
-            winY <= y + height) {
+    for (var {
+        bounds: { x, y, width, height },
+    } of screen.getAllDisplays()) {
+        if (winX >= x && winX <= x + width && winY >= y && winY <= y + height) {
             return;
         }
     }
@@ -64,17 +63,17 @@ function createMainWindow() {
         title: APP_NAME,
         icon: APP_ICON,
         // frame: false,
-        titleBarStyle: (process.platform === 'darwin') ? 'hiddenInset' : 'default',
+        titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
         webPreferences: {
             preload: APP_PRELOAD_JS,
             // partition: 'persist:vrcx',
             defaultEncoding: 'utf-8',
-            spellcheck: false
-        }
+            spellcheck: false,
+        },
     });
 
     // hide unnecessary things :p
-    window_.webContents.userAgent = window_.webContents.userAgent.replace(/(vrcx|electron)\/.+? /ig, '');
+    window_.webContents.userAgent = window_.webContents.userAgent.replace(/(vrcx|electron)\/.+? /gi, '');
 
     // bypass CORS
     interceptWebRequest(window_.webContents.session.webRequest);
@@ -112,5 +111,5 @@ function activateMainWindow() {
 
 module.exports = {
     createMainWindow,
-    activateMainWindow
+    activateMainWindow,
 };
