@@ -36,15 +36,15 @@
     "vue": "^2.6.12"
   },
   "devDependencies": {
-    "electron": "^11.2.3",
+    "electron": "^11.3.0",
     "electron-builder": "^22.9.1",
     "electron-rebuild": "^2.3.5",
-    "html-webpack-plugin": "^5.1.0",
-    "laravel-mix": "^6.0.11",
+    "html-webpack-plugin": "^5.2.0",
+    "laravel-mix": "^6.0.13",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.1.0",
     "resolve-url-loader": "^3.1.2",
-    "sass": "^1.32.7",
+    "sass": "^1.32.8",
     "sass-loader": "^8.0.2",
     "vue-loader": "^15.9.5",
     "vue-template-compiler": "^2.6.12"
