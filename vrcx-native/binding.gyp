@@ -7,7 +7,7 @@
         'src/addon.cc'
       ],
       'include_dirs': [
-        'deps/openvr/headers'
+        '../deps/openvr/headers'
       ],
       'conditions': [
         [
