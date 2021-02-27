@@ -1,0 +1,3 @@
+[submodule "vrcx-native/deps/openvr"]
+	path = vrcx-native/deps/openvr
+	url = https://github.com/ValveSoftware/openvr

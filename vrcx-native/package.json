@@ -1,0 +1,11 @@
+{
+  "name": "vrcx-native",
+  "main": "index.js",
+  "scripts": {
+    "install": "prebuild-install || node-gyp rebuild"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "prebuild-install": "^6.0.0"
+  }
+}
