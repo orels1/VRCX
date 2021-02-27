@@ -7,7 +7,6 @@
   "scripts": {
     "start": "electron . --enable-logging",
     "rebuild": "electron-rebuild -f -w vrcx-native,better-sqlite3",
-    "rebuild:vrcx-native": "electron-rebuild -f -w vrcx-native",
     "dev:main": "mix --mix-config=webpack.mix.main.js",
     "prod:main": "mix --production --mix-config=webpack.mix.main.js",
     "watch:main": "mix watch --mix-config=webpack.mix.main.js",
