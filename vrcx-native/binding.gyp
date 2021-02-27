@@ -2,7 +2,6 @@
   'targets': [
     {
       'target_name': 'vrcx_native',
-      'type': 'static_library',
       'sources': [
         'src/main.cc',
         'src/addon.cc'
