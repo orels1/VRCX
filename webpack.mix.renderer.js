@@ -7,7 +7,7 @@ mix.webpackConfig({
     target: 'electron-renderer',
 });
 
-mix.override(function(webpackConfig) {
+mix.override(function (webpackConfig) {
     webpackConfig.module.rules.push({
         test: /\.pug$/,
         oneOf: [
@@ -29,6 +29,12 @@ mix.override(function(webpackConfig) {
         })
     );
 });
+
+mix.copyDirectory(
+    'node_modules/element-plus/lib/theme-chalk/fonts/',
+    'assets/vendor/element-plus/lib/theme-chalk/fonts/'
+);
+mix.copyDirectory('node_modules/element-plus/lib/theme-chalk/index.css', 'assets/vendor/element-plus/lib/theme-chalk/');
 
 mix.js('src/js/app.js', 'assets/').vue();
 mix.sass('src/css/app.scss', 'assets/');
