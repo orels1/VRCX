@@ -85,7 +85,7 @@ function createMainWindow() {
         fullscreenable: false,
         title: APP_NAME,
         icon: APP_ICON,
-        // frame: false,
+        frame: false,
         titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
         webPreferences: {
             preload: APP_PRELOAD_JS,
