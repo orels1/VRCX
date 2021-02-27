@@ -2,6 +2,7 @@
 h1 {{ greeting }} Vue
 p {{ now }}
 button(type="button" @click="handleButton") handle
+img(width=512 height=512 ref="overlayImage")
 </template>
 
 <script>
@@ -10,6 +11,7 @@ import { ref, computed, reactive, toRefs, onMounted } from 'vue';
 export default {
     setup(props, { attrs, slots, emit }) {
         var now = ref(0);
+        var overlayImage = ref(null);
         var state = reactive({
             greeting: 'Hello',
             now: computed(function () {
@@ -22,7 +24,13 @@ export default {
                 setTimeout(update, 1000);
             })();
         });
+        window.ipcRenderer.on('setOverlayImage', function (event, { image }) {
+            if (overlayImage.value !== null) {
+                overlayImage.value.src = image;
+            }
+        });
         return {
+            overlayImage,
             ...toRefs(state),
             handleButton() {
                 state.greeting = 'SEX';

@@ -51,6 +51,7 @@
                 'target_arch == "x64"',
                 {
                   'libraries': [
+                    'd3d11.lib',
                     '../deps/openvr/lib/win64/openvr_api.lib'
                   ],
                   'copies': [

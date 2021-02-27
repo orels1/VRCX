@@ -1,6 +1,7 @@
 const { app, BrowserWindow, screen, shell } = require('electron');
 const { APP_NAME, APP_PRELOAD_JS, APP_ICON } = require('./constants');
 const interceptWebRequest = require('./intercept-webrequest');
+const native = require('vrcx-native');
 
 /** @type {?BrowserWindow} */
 var window_ = null;
@@ -53,6 +54,28 @@ function createMainWindow() {
     if (window_ !== null) {
         return;
     }
+
+    var overlayWindow = new BrowserWindow({
+        width: 512,
+        height: 512,
+        show: false,
+        webPreferences: {
+            offscreen: true,
+        },
+    });
+    overlayWindow.webContents.on('paint', function (event, dirtyRect, image) {
+        var result = native.setFrameBuffer(0, image.getBitmap());
+        if (result !== 0) {
+            console.log('native.setFrameBuffer', result);
+        }
+        if (window_ !== null) {
+            // window_.webContents.send('setOverlayImage', {
+            //     image: image.toDataURL(),
+            // });
+        }
+    });
+    // overlayWindow.loadURL('https://testdrive-archive.azurewebsites.net/performance/fishbowl/');
+    overlayWindow.loadURL('https://youtube.com/');
 
     window_ = new BrowserWindow({
         width: 800,
