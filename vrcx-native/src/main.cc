@@ -205,7 +205,7 @@ DWORD __stdcall thread_proc(void *args)
 
 Napi::Object init(Napi::Env env, Napi::Object exports)
 {
-    CloseHandle(CreateThread(NULL, 0, thread_proc, NULL, 0, NULL));
+    // CloseHandle(CreateThread(NULL, 0, thread_proc, NULL, 0, NULL));
     exports.Set(Napi::Value::From(env, "sample"), Napi::Function::New(env, sample));
     exports.Set(Napi::Value::From(env, "sum"), Napi::Function::New(env, sum));
     exports.Set(Napi::Value::From(env, "setFrameBuffer"), Napi::Function::New(env, setFrameBuffer));
