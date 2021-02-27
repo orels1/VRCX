@@ -38,7 +38,7 @@ speechSynthesis.getVoices();
 
     await configRepository.init();
 
-    if (configRepository.getBool('migrate_config_20201101') === null) {
+    if ((await configRepository.getBool('migrate_config_20201101')) === null) {
         var legacyConfigKeys = [
             'orderFriendGroup0',
             'orderFriendGroup1',
@@ -60,9 +60,9 @@ speechSynthesis.getVoices();
             'launchAsDesktop'
         ];
         for (var _key of legacyConfigKeys) {
-            configRepository.setBool(_key, VRCXStorage.Get(_key) === 'true');
+            (await configRepository.setBool(_key, VRCXStorage.Get(_key)) === 'true');
         }
-        configRepository.setBool('migrate_config_20201101', true);
+        (await configRepository.setBool('migrate_config_20201101', true));
     }
 
     document.addEventListener('keyup', function (e) {
@@ -3652,7 +3652,7 @@ speechSynthesis.getVoices();
     API.$on('LOGIN', function (args) {
         sharedRepository.setArray('wristFeed', []);
         sharedRepository.setArray('notyFeed', []);
-        setTimeout(function() {
+        setTimeout(function () {
             $app.appInit = true;
             $app.updateSharedFeed(true);
             $app.notyInit = true;
@@ -3818,9 +3818,9 @@ speechSynthesis.getVoices();
             }
             if ((w < 20) && (wristFilter[ctx.type]) &&
                 ((wristFilter[ctx.type] === 'On') ||
-                (wristFilter[ctx.type] === 'Everyone') ||
-                ((wristFilter[ctx.type] === 'Friends') && (isFriend)) ||
-                ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    (wristFilter[ctx.type] === 'Everyone') ||
+                    ((wristFilter[ctx.type] === 'Friends') && (isFriend)) ||
+                    ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 wristArr.push({
                     ...ctx,
                     isFriend,
@@ -3830,9 +3830,9 @@ speechSynthesis.getVoices();
             }
             if ((n < 5) && (notyFilter[ctx.type]) &&
                 ((notyFilter[ctx.type] === 'On') ||
-                (notyFilter[ctx.type] === 'Everyone') ||
-                ((notyFilter[ctx.type] === 'Friends') && (isFriend)) ||
-                ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    (notyFilter[ctx.type] === 'Everyone') ||
+                    ((notyFilter[ctx.type] === 'Friends') && (isFriend)) ||
+                    ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 notyArr.push({
                     ...ctx,
                     isFriend,
@@ -3883,7 +3883,7 @@ speechSynthesis.getVoices();
             var isFavorite = API.cachedFavoritesByObjectId.has(ctx.userId);
             if ((w < 20) && (wristFilter[ctx.type]) &&
                 ((wristFilter[ctx.type] === 'Friends') ||
-                ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 wristArr.push({
                     ...ctx,
                     isFriend,
@@ -3893,7 +3893,7 @@ speechSynthesis.getVoices();
             }
             if ((n < 5) && (notyFilter[ctx.type]) &&
                 ((notyFilter[ctx.type] === 'Friends') ||
-                ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 notyArr.push({
                     ...ctx,
                     isFriend,
@@ -3939,8 +3939,8 @@ speechSynthesis.getVoices();
             var isFavorite = API.cachedFavoritesByObjectId.has(ctx.senderUserId);
             if ((w < 20) && (wristFilter[ctx.type]) &&
                 ((wristFilter[ctx.type] === 'On') ||
-                (wristFilter[ctx.type] === 'Friends') ||
-                ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    (wristFilter[ctx.type] === 'Friends') ||
+                    ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 wristArr.push({
                     ...ctx,
                     isFriend,
@@ -3950,8 +3950,8 @@ speechSynthesis.getVoices();
             }
             if ((n < 5) && (notyFilter[ctx.type]) &&
                 ((notyFilter[ctx.type] === 'On') ||
-                (notyFilter[ctx.type] === 'Friends') ||
-                ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    (notyFilter[ctx.type] === 'Friends') ||
+                    ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 notyArr.push({
                     ...ctx,
                     isFriend,
@@ -3997,8 +3997,8 @@ speechSynthesis.getVoices();
             var isFavorite = API.cachedFavoritesByObjectId.has(ctx.userId);
             if ((w < 20) && (wristFilter[ctx.type]) &&
                 ((wristFilter[ctx.type] === 'On') ||
-                (wristFilter[ctx.type] === 'Friends') ||
-                ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    (wristFilter[ctx.type] === 'Friends') ||
+                    ((wristFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 wristArr.push({
                     ...ctx,
                     isFriend,
@@ -4008,8 +4008,8 @@ speechSynthesis.getVoices();
             }
             if ((n < 5) && (notyFilter[ctx.type]) &&
                 ((notyFilter[ctx.type] === 'On') ||
-                (notyFilter[ctx.type] === 'Friends') ||
-                ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
+                    (notyFilter[ctx.type] === 'Friends') ||
+                    ((notyFilter[ctx.type] === 'VIP') && (isFavorite)))) {
                 notyArr.push({
                     ...ctx,
                     isFriend,
@@ -4108,7 +4108,7 @@ speechSynthesis.getVoices();
         }
         var bias = new Date(Date.now() - 60000).toJSON();
         var noty = {};
-        var messageList = [ 'inviteMessage', 'requestMessage', 'responseMessage' ];
+        var messageList = ['inviteMessage', 'requestMessage', 'responseMessage'];
         for (var i = 0; i < notyToPlay.length; i++) {
             noty = notyToPlay[i];
             if (noty.created_at < bias) {
@@ -4461,10 +4461,10 @@ speechSynthesis.getVoices();
         $app.updateStoredUser(this.currentUser);
     });
 
-    $app.methods.updateStoredUser = function (currentUser) {
+    $app.methods.updateStoredUser = async function (currentUser) {
         var savedCredentialsArray = {};
-        if (configRepository.getString('savedCredentials') !== null) {
-            var savedCredentialsArray = JSON.parse(configRepository.getString('savedCredentials'));
+        if ((await configRepository.getString('savedCredentials')) !== null) {
+            var savedCredentialsArray = JSON.parse((await configRepository.getString('savedCredentials')));
         }
         if (this.saveCredentials) {
             var credentialsToSave = { user: currentUser, loginParmas: this.saveCredentials };
@@ -4475,9 +4475,9 @@ speechSynthesis.getVoices();
         }
         this.loginForm.savedCredentials = savedCredentialsArray;
         var jsonCredentialsArray = JSON.stringify(savedCredentialsArray);
-        configRepository.setString('savedCredentials', jsonCredentialsArray);
+        (await configRepository.setString('savedCredentials', jsonCredentialsArray));
         this.loginForm.lastUserLoggedIn = currentUser.username;
-        configRepository.setString('lastUserLoggedIn', currentUser.username);
+        (await configRepository.setString('lastUserLoggedIn', currentUser.username));
     };
 
     $app.methods.relogin = function (loginParmas) {
@@ -4498,12 +4498,12 @@ speechSynthesis.getVoices();
         });
     };
 
-    $app.methods.deleteSavedLogin = function (username) {
-        var savedCredentialsArray = JSON.parse(configRepository.getString('savedCredentials'));
+    $app.methods.deleteSavedLogin = async function (username) {
+        var savedCredentialsArray = JSON.parse((await configRepository.getString('savedCredentials')));
         delete savedCredentialsArray[username];
         $app.loginForm.savedCredentials = savedCredentialsArray;
         var jsonCredentialsArray = JSON.stringify(savedCredentialsArray);
-        configRepository.setString('savedCredentials', jsonCredentialsArray);
+        (await configRepository.setString('savedCredentials', jsonCredentialsArray));
         new Noty({
             type: 'success',
             text: 'Account removed.'
@@ -4530,10 +4530,10 @@ speechSynthesis.getVoices();
         username: '',
         password: '',
         saveCredentials: false,
-        savedCredentials: ((configRepository.getString('lastUserLoggedIn') !== null)
-            ? JSON.parse(configRepository.getString('savedCredentials'))
+        savedCredentials: (((await configRepository.getString('lastUserLoggedIn')) !== null)
+            ? JSON.parse((await configRepository.getString('savedCredentials')))
             : {}),
-        lastUserLoggedIn: configRepository.getString('lastUserLoggedIn'),
+        lastUserLoggedIn: (await configRepository.getString('lastUserLoggedIn')),
         rules: {
             username: [
                 {
@@ -4644,15 +4644,15 @@ speechSynthesis.getVoices();
     $app.data.sortFriendsGroup1 = false;
     $app.data.sortFriendsGroup2 = false;
     $app.data.sortFriendsGroup3 = false;
-    $app.data.orderFriendsGroup0 = configRepository.getBool('orderFriendGroup0');
-    $app.data.orderFriendsGroup1 = configRepository.getBool('orderFriendGroup1');
-    $app.data.orderFriendsGroup2 = configRepository.getBool('orderFriendGroup2');
-    $app.data.orderFriendsGroup3 = configRepository.getBool('orderFriendGroup3');
-    var saveOrderFriendGroup = function () {
-        configRepository.setBool('orderFriendGroup0', this.orderFriendsGroup0);
-        configRepository.setBool('orderFriendGroup1', this.orderFriendsGroup1);
-        configRepository.setBool('orderFriendGroup2', this.orderFriendsGroup2);
-        configRepository.setBool('orderFriendGroup3', this.orderFriendsGroup3);
+    $app.data.orderFriendsGroup0 = (await configRepository.getBool('orderFriendGroup0'));
+    $app.data.orderFriendsGroup1 = (await configRepository.getBool('orderFriendGroup1'));
+    $app.data.orderFriendsGroup2 = (await configRepository.getBool('orderFriendGroup2'));
+    $app.data.orderFriendsGroup3 = (await configRepository.getBool('orderFriendGroup3'));
+    var saveOrderFriendGroup = async function () {
+        (await configRepository.setBool('orderFriendGroup0', this.orderFriendsGroup0));
+        (await configRepository.setBool('orderFriendGroup1', this.orderFriendsGroup1));
+        (await configRepository.setBool('orderFriendGroup2', this.orderFriendsGroup2));
+        (await configRepository.setBool('orderFriendGroup3', this.orderFriendsGroup3));
     };
     $app.watch.orderFriendsGroup0 = saveOrderFriendGroup;
     $app.watch.orderFriendsGroup1 = saveOrderFriendGroup;
@@ -5391,11 +5391,11 @@ speechSynthesis.getVoices();
 
     $app.data.lastLocation = '';
     $app.data.lastLocation$ = {};
-    $app.data.discordActive = configRepository.getBool('discordActive');
-    $app.data.discordInstance = configRepository.getBool('discordInstance');
-    var saveDiscordOption = function () {
-        configRepository.setBool('discordActive', this.discordActive);
-        configRepository.setBool('discordInstance', this.discordInstance);
+    $app.data.discordActive = (await configRepository.getBool('discordActive'));
+    $app.data.discordInstance = (await configRepository.getBool('discordInstance'));
+    var saveDiscordOption = async function () {
+        (await configRepository.setBool('discordActive', this.discordActive));
+        (await configRepository.setBool('discordInstance', this.discordInstance));
     };
     $app.watch.discordActive = saveDiscordOption;
     $app.watch.discordInstance = saveDiscordOption;
@@ -6535,35 +6535,35 @@ speechSynthesis.getVoices();
         layout: 'table'
     };
     $app.data.visits = 0;
-    $app.data.openVR = configRepository.getBool('openVR');
-    $app.data.openVRAlways = configRepository.getBool('openVRAlways');
-    $app.data.overlaybutton = configRepository.getBool('VRCX_overlaybutton');
-    $app.data.hidePrivateFromFeed = configRepository.getBool('VRCX_hidePrivateFromFeed');
-    $app.data.hideOnPlayerJoined = configRepository.getBool('VRCX_hideOnPlayerJoined');
-    $app.data.hideDevicesFromFeed = configRepository.getBool('VRCX_hideDevicesFromFeed');
-    $app.data.overlayNotifications = configRepository.getBool('VRCX_overlayNotifications');
-    $app.data.desktopToast = configRepository.getString('VRCX_desktopToast');
-    $app.data.minimalFeed = configRepository.getBool('VRCX_minimalFeed');
-    $app.data.displayVRCPlusIconsAsAvatar = configRepository.getBool('displayVRCPlusIconsAsAvatar');
-    $app.data.notificationTTS = configRepository.getBool('VRCX_notificationTTS');
-    $app.data.notificationTTSVoice = configRepository.getString('VRCX_notificationTTSVoice');
-    $app.data.notificationTimeout = configRepository.getString('VRCX_notificationTimeout');
-    var saveOpenVROption = function () {
-        configRepository.setBool('openVR', this.openVR);
-        configRepository.setBool('openVRAlways', this.openVRAlways);
-        configRepository.setBool('VRCX_overlaybutton', this.overlaybutton);
-        configRepository.setBool('VRCX_hidePrivateFromFeed', this.hidePrivateFromFeed);
-        configRepository.setBool('VRCX_hideOnPlayerJoined', this.hideOnPlayerJoined);
-        configRepository.setBool('VRCX_hideDevicesFromFeed', this.hideDevicesFromFeed);
-        configRepository.setBool('VRCX_overlayNotifications', this.overlayNotifications);
-        configRepository.setString('VRCX_desktopToast', this.desktopToast);
-        configRepository.setBool('VRCX_minimalFeed', this.minimalFeed);
-        configRepository.setBool('displayVRCPlusIconsAsAvatar', this.displayVRCPlusIconsAsAvatar);
+    $app.data.openVR = (await configRepository.getBool('openVR'));
+    $app.data.openVRAlways = (await configRepository.getBool('openVRAlways'));
+    $app.data.overlaybutton = (await configRepository.getBool('VRCX_overlaybutton'));
+    $app.data.hidePrivateFromFeed = (await configRepository.getBool('VRCX_hidePrivateFromFeed'));
+    $app.data.hideOnPlayerJoined = (await configRepository.getBool('VRCX_hideOnPlayerJoined'));
+    $app.data.hideDevicesFromFeed = (await configRepository.getBool('VRCX_hideDevicesFromFeed'));
+    $app.data.overlayNotifications = (await configRepository.getBool('VRCX_overlayNotifications'));
+    $app.data.desktopToast = (await configRepository.getString('VRCX_desktopToast'));
+    $app.data.minimalFeed = (await configRepository.getBool('VRCX_minimalFeed'));
+    $app.data.displayVRCPlusIconsAsAvatar = (await configRepository.getBool('displayVRCPlusIconsAsAvatar'));
+    $app.data.notificationTTS = (await configRepository.getBool('VRCX_notificationTTS'));
+    $app.data.notificationTTSVoice = (await configRepository.getString('VRCX_notificationTTSVoice'));
+    $app.data.notificationTimeout = (await configRepository.getString('VRCX_notificationTimeout'));
+    var saveOpenVROption = async function () {
+        (await configRepository.setBool('openVR', this.openVR));
+        (await configRepository.setBool('openVRAlways', this.openVRAlways));
+        (await configRepository.setBool('VRCX_overlaybutton', this.overlaybutton));
+        (await configRepository.setBool('VRCX_hidePrivateFromFeed', this.hidePrivateFromFeed));
+        (await configRepository.setBool('VRCX_hideOnPlayerJoined', this.hideOnPlayerJoined));
+        (await configRepository.setBool('VRCX_hideDevicesFromFeed', this.hideDevicesFromFeed));
+        (await configRepository.setBool('VRCX_overlayNotifications', this.overlayNotifications));
+        (await configRepository.setString('VRCX_desktopToast', this.desktopToast));
+        (await configRepository.setBool('VRCX_minimalFeed', this.minimalFeed));
+        (await configRepository.setBool('displayVRCPlusIconsAsAvatar', this.displayVRCPlusIconsAsAvatar));
         this.updateVRConfigVars();
     };
     $app.data.TTSvoices = speechSynthesis.getVoices();
-    var saveNotificationTTS = function () {
-        configRepository.setBool('VRCX_notificationTTS', this.notificationTTS);
+    var saveNotificationTTS = async function () {
+        (await configRepository.setBool('VRCX_notificationTTS', this.notificationTTS));
         speechSynthesis.cancel();
         if (this.notificationTTS) {
             this.speak('Notification text-to-speech enabled');
@@ -6581,23 +6581,23 @@ speechSynthesis.getVoices();
     $app.watch.minimalFeed = saveOpenVROption;
     $app.watch.displayVRCPlusIconsAsAvatar = saveOpenVROption;
     $app.watch.notificationTTS = saveNotificationTTS;
-    $app.data.isDarkMode = configRepository.getBool('isDarkMode');
+    $app.data.isDarkMode = (await configRepository.getBool('isDarkMode'));
     $appDarkStyle.disabled = $app.data.isDarkMode === false;
-    $app.watch.isDarkMode = function () {
-        configRepository.setBool('isDarkMode', this.isDarkMode);
+    $app.watch.isDarkMode = async function () {
+        (await configRepository.setBool('isDarkMode', this.isDarkMode));
         $appDarkStyle.disabled = this.isDarkMode === false;
         this.updateVRConfigVars();
     };
-    $app.data.isStartAtWindowsStartup = configRepository.getBool('VRCX_StartAtWindowsStartup');
+    $app.data.isStartAtWindowsStartup = (await configRepository.getBool('VRCX_StartAtWindowsStartup'));
     $app.data.isStartAsMinimizedState = (VRCXStorage.Get('VRCX_StartAsMinimizedState') === 'true');
-    $app.data.isCloseToTray = configRepository.getBool('VRCX_CloseToTray');
-    $app.data.isAutoLogin = configRepository.getBool('VRCX_AutoLogin');
-    var saveVRCXWindowOption = function () {
-        configRepository.setBool('VRCX_StartAtWindowsStartup', this.isStartAtWindowsStartup);
+    $app.data.isCloseToTray = (await configRepository.getBool('VRCX_CloseToTray'));
+    $app.data.isAutoLogin = (await configRepository.getBool('VRCX_AutoLogin'));
+    var saveVRCXWindowOption = async function () {
+        (await configRepository.setBool('VRCX_StartAtWindowsStartup', this.isStartAtWindowsStartup));
         VRCXStorage.Set('VRCX_StartAsMinimizedState', this.isStartAsMinimizedState.toString());
-        configRepository.setBool('VRCX_CloseToTray', this.isCloseToTray);
+        (await configRepository.setBool('VRCX_CloseToTray', this.isCloseToTray));
         AppApi.SetStartup(this.isStartAtWindowsStartup);
-        configRepository.setBool('VRCX_AutoLogin', this.isAutoLogin);
+        (await configRepository.setBool('VRCX_AutoLogin', this.isAutoLogin));
     };
     $app.watch.isStartAtWindowsStartup = saveVRCXWindowOption;
     $app.watch.isStartAsMinimizedState = saveVRCXWindowOption;
@@ -6605,27 +6605,27 @@ speechSynthesis.getVoices();
     $app.watch.isAutoLogin = saveVRCXWindowOption;
 
     // setting defaults
-    if (configRepository.getBool('displayVRCPlusIconsAsAvatar') === null) {
+    if ((await configRepository.getBool('displayVRCPlusIconsAsAvatar')) === null) {
         $app.data.displayVRCPlusIconsAsAvatar = true;
-        configRepository.setBool('displayVRCPlusIconsAsAvatar', $app.data.displayVRCPlusIconsAsAvatar);
+        (await configRepository.setBool('displayVRCPlusIconsAsAvatar', $app.data.displayVRCPlusIconsAsAvatar));
     }
-    if (!configRepository.getString('VRCX_notificationPosition')) {
+    if (!(await configRepository.getString('VRCX_notificationPosition'))) {
         $app.data.notificationPosition = 'topCenter';
-        configRepository.setString('VRCX_notificationPosition', $app.data.notificationPosition);
+        (await configRepository.setString('VRCX_notificationPosition', $app.data.notificationPosition));
     }
-    if (!configRepository.getString('VRCX_notificationTimeout')) {
+    if (!(await configRepository.getString('VRCX_notificationTimeout'))) {
         $app.data.notificationTimeout = 3000;
-        configRepository.setString('VRCX_notificationTimeout', $app.data.notificationTimeout);
+        (await configRepository.setString('VRCX_notificationTimeout', $app.data.notificationTimeout));
     }
-    if (!configRepository.getString('VRCX_notificationTTSVoice')) {
+    if (!(await configRepository.getString('VRCX_notificationTTSVoice'))) {
         $app.data.notificationTTSVoice = '0';
-        configRepository.setString('VRCX_notificationTTSVoice', $app.data.notificationTTSVoice);
+        (await configRepository.setString('VRCX_notificationTTSVoice', $app.data.notificationTTSVoice));
     }
-    if (!configRepository.getString('VRCX_desktopToast')) {
+    if (!(await configRepository.getString('VRCX_desktopToast'))) {
         $app.data.desktopToast = 'Never';
-        configRepository.setString('VRCX_desktopToast', $app.data.desktopToast);
+        (await configRepository.setString('VRCX_desktopToast', $app.data.desktopToast));
     }
-    if (!configRepository.getString('sharedFeedFilters')) {
+    if (!(await configRepository.getString('sharedFeedFilters'))) {
         var sharedFeedFilters = {
             noty: {},
             wrist: {}
@@ -6675,9 +6675,9 @@ speechSynthesis.getVoices();
         sharedFeedFilters.wrist.mute = 'On';
         sharedFeedFilters.wrist.unmute = 'On';
 
-        configRepository.setString('sharedFeedFilters', JSON.stringify(sharedFeedFilters));
+        (await configRepository.setString('sharedFeedFilters', JSON.stringify(sharedFeedFilters)));
     }
-    $app.data.sharedFeedFilters = JSON.parse(configRepository.getString('sharedFeedFilters'));
+    $app.data.sharedFeedFilters = JSON.parse((await configRepository.getString('sharedFeedFilters')));
 
     $app.data.toggleSwitchOptionsEveryone = {
         layout: {
@@ -6760,7 +6760,7 @@ speechSynthesis.getVoices();
         }
     };
 
-    if (!configRepository.getString('VRCX_trustColor')) {
+    if (!(await configRepository.getString('VRCX_trustColor'))) {
         var trustColor = {
             untrusted: '#CCCCCC',
             basic: '#1778FF',
@@ -6770,18 +6770,18 @@ speechSynthesis.getVoices();
             legend: '#FFD000',
             legendary: '#FF69B4'
         };
-        configRepository.setString('VRCX_trustColor', JSON.stringify(trustColor));
+        (await configRepository.setString('VRCX_trustColor', JSON.stringify(trustColor)));
     }
-    $app.data.trustColor = JSON.parse(configRepository.getString('VRCX_trustColor'));
+    $app.data.trustColor = JSON.parse((await configRepository.getString('VRCX_trustColor')));
 
     $app.data.trustColorSwatches = ['#CCCCCC', '#1778FF', '#2BCF5C', '#FF7B42', '#B18FFF', '#FFD000', '#FF69B4', '#ABCDEF', '#8143E6', '#B52626', '#000000', '#FFFFFF'];
 
-    $app.methods.updatetrustColor = function () {
+    $app.methods.updatetrustColor = async function () {
         var trustColor = $app.trustColor;
         if (trustColor) {
-            configRepository.setString('VRCX_trustColor', JSON.stringify(trustColor));
+            (await configRepository.setString('VRCX_trustColor', JSON.stringify(trustColor)));
         } else {
-            trustColor = JSON.parse(configRepository.getString('VRCX_trustColor'));
+            trustColor = JSON.parse((await configRepository.getString('VRCX_trustColor')));
             $app.trustColor = trustColor;
         }
         if (document.getElementById('trustColor') !== null) {
@@ -6806,22 +6806,22 @@ speechSynthesis.getVoices();
     $app.watch['trustColor.legend'] = $app.methods.updatetrustColor;
     $app.watch['trustColor.legendary'] = $app.methods.updatetrustColor;
 
-    $app.methods.saveSharedFeedFilters = function () {
+    $app.methods.saveSharedFeedFilters = async function () {
         this.notyFeedFiltersDialog.visible = false;
         this.wristFeedFiltersDialog.visible = false;
-        configRepository.setString('sharedFeedFilters', JSON.stringify(this.sharedFeedFilters));
+        (await configRepository.setString('sharedFeedFilters', JSON.stringify(this.sharedFeedFilters)));
         this.updateVRConfigVars();
     };
 
-    $app.methods.cancelSharedFeedFilters = function () {
+    $app.methods.cancelSharedFeedFilters = async function () {
         this.notyFeedFiltersDialog.visible = false;
         this.wristFeedFiltersDialog.visible = false;
-        this.sharedFeedFilters = JSON.parse(configRepository.getString('sharedFeedFilters'));
+        this.sharedFeedFilters = JSON.parse((await configRepository.getString('sharedFeedFilters')));
     };
 
-    $app.data.notificationPosition = configRepository.getString('VRCX_notificationPosition');
-    $app.methods.changeNotificationPosition = function () {
-        configRepository.setString('VRCX_notificationPosition', this.notificationPosition);
+    $app.data.notificationPosition = (await configRepository.getString('VRCX_notificationPosition'));
+    $app.methods.changeNotificationPosition = async function () {
+        (await configRepository.setString('VRCX_notificationPosition', this.notificationPosition));
         this.updateVRConfigVars();
     };
 
@@ -6850,8 +6850,8 @@ speechSynthesis.getVoices();
     };
     $app.watch.lastLocation = lastLocationStateChange;
 
-    $app.methods.updateVRConfigVars = function () {
-        if (configRepository.getBool('isDarkMode')) {
+    $app.methods.updateVRConfigVars = async function () {
+        if ((await configRepository.getBool('isDarkMode'))) {
             var notificationTheme = 'sunset';
         } else {
             var notificationTheme = 'relax';
@@ -6935,9 +6935,9 @@ speechSynthesis.getVoices();
         }
     };
 
-    $app.methods.changeTTSVoice = function (index) {
+    $app.methods.changeTTSVoice = async function (index) {
         this.notificationTTSVoice = index;
-        configRepository.setString('VRCX_notificationTTSVoice', this.notificationTTSVoice);
+        (await configRepository.setString('VRCX_notificationTTSVoice', this.notificationTTSVoice));
         var voices = speechSynthesis.getVoices();
         var voiceName = voices[index].name;
         speechSynthesis.cancel();
@@ -7009,7 +7009,7 @@ speechSynthesis.getVoices();
         });
     };
 
-    $app.methods.promptNotificationTimeout = function () {
+    $app.methods.promptNotificationTimeout = async function () {
         this.$prompt('Enter amount of seconds', 'Notification Timeout', {
             distinguishCancelAndClose: true,
             confirmButtonText: 'OK',
@@ -7017,12 +7017,12 @@ speechSynthesis.getVoices();
             inputValue: this.notificationTimeout / 1000,
             inputPattern: /\d+$/,
             inputErrorMessage: 'Valid number is required',
-            callback: (action, instance) => {
+            callback: async (action, instance) => {
                 if (action === 'confirm' &&
                     instance.inputValue &&
                     !isNaN(instance.inputValue)) {
                     this.notificationTimeout = Math.trunc(Number(instance.inputValue) * 1000);
-                    configRepository.setString('VRCX_notificationTimeout', this.notificationTimeout);
+                    (await configRepository.setString('VRCX_notificationTimeout', this.notificationTimeout));
                 }
             }
         });
@@ -8670,13 +8670,13 @@ speechSynthesis.getVoices();
     $app.data.launchDialog = {
         visible: false,
         loading: false,
-        desktop: configRepository.getBool('launchAsDesktop'),
+        desktop: (await configRepository.getBool('launchAsDesktop')),
         location: '',
         url: ''
     };
 
-    $app.watch['launchDialog.desktop'] = function () {
-        configRepository.setBool('launchAsDesktop', this.launchDialog.desktop);
+    $app.watch['launchDialog.desktop'] = async function () {
+        (await configRepository.setBool('launchAsDesktop', this.launchDialog.desktop));
     };
 
     API.$on('LOGOUT', function () {
@@ -8821,8 +8821,8 @@ speechSynthesis.getVoices();
         return false;
     };
 
-    $app.methods.onFileChangeVRCPlusIcon = function (e) {
-        var clearFile = function() {
+    $app.methods.onFileChangeVRCPlusIcon = async function (e) {
+        var clearFile = function () {
             if (document.querySelector('#VRCPlusIconUploadButton')) {
                 document.querySelector('#VRCPlusIconUploadButton').value = '';
             }
