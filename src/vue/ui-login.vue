@@ -2,12 +2,12 @@
 #ui-login
     #ui-login-box
         el-form(label-position="top" label-width="100px")
-            el-form-item(label="Username or Email")
+            el-form-item(:label="$t('login.username')")
                 el-input(v-model="username")
-            el-form-item(label="Password")
+            el-form-item(:label="$t('login.password')")
                 el-input(v-model="password")
             el-form-item
-                el-button(type="primary" @click="onSubmit") Login
+                el-button(type="primary") {{ $t('login.submit')}}
         div username="{{ username }}", password="{{ password }}"
 </template>
 

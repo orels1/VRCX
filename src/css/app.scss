@@ -47,6 +47,13 @@
     }
 }
 
+#app-lang-button-group {
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-app-region: no-drag;
+}
+
 #app-content {
     position: absolute;
     top: 25px;

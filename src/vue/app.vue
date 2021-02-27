@@ -1,5 +1,6 @@
 <template lang="pug">
 #app-title-bar
+UILang
 UIWindowButton
 #app-content
     UILogin
@@ -9,11 +10,13 @@ UIWindowButton
 import { ref, computed, reactive, toRefs } from 'vue';
 import UIWindowButton from './ui-window-button.vue';
 import UILogin from './ui-login.vue';
+import UILang from './ui-lang.vue';
 
 export default {
     components: {
         UIWindowButton,
         UILogin,
+        UILang,
     },
     setup(props, { attrs, slots, emit }) {
         var state = reactive({
@@ -21,7 +24,6 @@ export default {
         });
         return {
             ...toRefs(state),
-
         };
     },
 };

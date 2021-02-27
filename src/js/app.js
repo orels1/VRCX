@@ -1,5 +1,5 @@
 // const { ipcRenderer } = require('electron');
-import { createApp } from 'vue';
+import { ref, createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
 import ElementPlus from 'element-plus';
 import App from '../vue/app.vue';
@@ -12,22 +12,29 @@ import App from '../vue/app.vue';
 // });
 
 (async function () {
-    var messages = {
-        en: {
-            message: {
-                hello: 'Hello',
-            },
-        },
-        ko: {
-            message: {
-                hello: '안녕',
-            },
-        },
-    };
     var i18n = createI18n({
-        locale: 'ko',
+        locale: 'en',
         fallbackLocale: 'en',
-        messages,
+        messages: {
+            en: {
+                locale: {
+                    en: 'English',
+                    ko: '한국어',
+                },
+                login: {
+                    username: 'Username or Email',
+                    password: 'Password',
+                    submit: 'Login',
+                },
+            },
+            ko: {
+                login: {
+                    username: '닉네임 혹은 이메일 주소',
+                    password: '비밀번호',
+                    submit: '로그인',
+                },
+            },
+        },
     });
     var app = createApp(App);
     app.use(i18n);
