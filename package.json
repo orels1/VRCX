@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/pypy-vrc/VRCX#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "axios": "^0.21.1",
     "better-sqlite3": "^7.1.2",
     "element-plus": "^1.0.2-beta.32",

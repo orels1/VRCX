@@ -30,6 +30,14 @@ mix.override(function (webpackConfig) {
     );
 });
 
+// fontawesome
+mix.copyDirectory(
+    'node_modules/@fortawesome/fontawesome-free/webfonts/',
+    'assets/vendor/fontawesome/webfonts/'
+);
+mix.copyDirectory('node_modules/@fortawesome/fontawesome-free/css/all.min.css', 'assets/vendor/fontawesome/css/');
+
+// element-plus
 mix.copyDirectory(
     'node_modules/element-plus/lib/theme-chalk/fonts/',
     'assets/vendor/element-plus/lib/theme-chalk/fonts/'
