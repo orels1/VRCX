@@ -1,5 +1,5 @@
 <template lang="pug">
-h1 {{ greeting }} Vue
+h1 {{ greeting }} Vue ({{ $t('message.hello') }})
 p {{ now }}
 button(type="button" @click="handleButton") handle
 img(width=512 height=512 ref="overlayImage")
