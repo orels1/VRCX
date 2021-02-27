@@ -1,6 +1,7 @@
 // const { ipcRenderer } = require('electron');
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n';
+import ElementPlus from 'element-plus';
 import App from '../vue/app.vue';
 
 // ipcRenderer.send('vrcx', 'send'); // void
@@ -30,5 +31,6 @@ import App from '../vue/app.vue';
     });
     var app = createApp(App);
     app.use(i18n);
+    app.use(ElementPlus);
     app.mount('#app');
 })();
