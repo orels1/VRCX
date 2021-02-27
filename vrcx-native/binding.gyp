@@ -10,8 +10,7 @@
         'src/main.cc',
       ],
       'include_dirs': [
-        '<!(node -p "require(\'node-addon-api\').include_dir")',
-        '../deps/openvr/headers'
+        '<!(node -p "require(\'node-addon-api\').include_dir")'
       ],
       'cflags!': [
         '-fno-exceptions'
