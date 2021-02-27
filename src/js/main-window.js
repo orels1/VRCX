@@ -79,9 +79,9 @@ function createMainWindow() {
 
     window_ = new BrowserWindow({
         width: 800,
-        height: 600,
-        minWidth: 320,
-        minHeight: 240,
+        height: 500,
+        minWidth: 800,
+        minHeight: 500,
         fullscreenable: false,
         title: APP_NAME,
         icon: APP_ICON,
@@ -132,7 +132,26 @@ function activateMainWindow() {
     window_.focus();
 }
 
+function minimizeMainWindow() {
+    window_.minimize();
+}
+
+function maximizeMainWindow() {
+    if (window_.isMaximized() === true) {
+        window_.restore();
+    } else {
+        window_.maximize();
+    }
+}
+
+function closeMainWindow() {
+    window_.close();
+}
+
 module.exports = {
     createMainWindow,
     activateMainWindow,
+    minimizeMainWindow,
+    maximizeMainWindow,
+    closeMainWindow,
 };

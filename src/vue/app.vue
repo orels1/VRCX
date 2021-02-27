@@ -1,54 +1,28 @@
 <template lang="pug">
-h1 {{ greeting }} Vue ({{ $t('message.hello') }})
-p {{ now }}
-button(type="button" @click="handleButton") handle
-img(width=512 height=512 ref="overlayImage")
+#app-title-bar
+UIWindowButton
+#app-content
+    UILogin
 </template>
 
 <script>
-import { ref, computed, reactive, toRefs, onMounted } from 'vue';
+import { ref, computed, reactive, toRefs } from 'vue';
+import UIWindowButton from './ui-window-button.vue';
+import UILogin from './ui-login.vue';
 
 export default {
+    components: {
+        UIWindowButton,
+        UILogin,
+    },
     setup(props, { attrs, slots, emit }) {
-        var now = ref(0);
-        var overlayImage = ref(null);
         var state = reactive({
-            greeting: 'Hello',
-            now: computed(function () {
-                return new Date(now.value).toJSON();
-            }),
-        });
-        onMounted(function () {
-            (function update() {
-                now.value = Date.now();
-                setTimeout(update, 1000);
-            })();
-        });
-        window.ipcRenderer.on('setOverlayImage', function (event, { image }) {
-            if (overlayImage.value !== null) {
-                overlayImage.value.src = image;
-            }
+            currentUser: null,
         });
         return {
-            overlayImage,
             ...toRefs(state),
-            handleButton() {
-                state.greeting = 'SEX';
-                window.sex();
-            },
+
         };
     },
 };
 </script>
-
-<style lang="scss" scoped>
-.app {
-    > h1 {
-        text-align: center;
-    }
-    > p {
-        text-align: center;
-        font-size: 12px;
-    }
-}
-</style>

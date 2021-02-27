@@ -1,0 +1,77 @@
+@import 'base.scss';
+
+#app {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#app-title-bar {
+    display: flex;
+    margin: 3px;
+    margin-bottom: 0;
+    height: 25px;
+    -webkit-app-region: drag;
+}
+
+#app-title-window-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 22px;
+    display: flex;
+    flex-direction: row;
+    -webkit-app-region: no-drag;
+
+    > i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        width: 30px;
+        height: 100%;
+        color: #888;
+
+        &:hover {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+
+            &.fa-window-close {
+                background: rgba(255, 0, 0, 0.7);
+            }
+        }
+    }
+}
+
+#app-content {
+    position: absolute;
+    top: 25px;
+    width: 100%;
+    height: calc(100% - 25px);
+    overflow: hidden auto;
+}
+
+#ui-login {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ui-login-box {
+    padding: 20px;
+    width: 600px;
+    background: #666;
+
+    .el-form-item__label {
+        color: #333;
+    }
+}
