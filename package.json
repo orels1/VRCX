@@ -59,10 +59,10 @@
     "copyright": "Copyright © 2021 pypy",
     "files": [
       "assets/*",
-      "!**/node_modules/vrcx-native",
-      "vrcx-native/build/Release/*",
-      "vrcx-native/index.js",
-      "vrcx-native/package.json"
+      "!**/node_modules/vrcx-native/bin",
+      "!**/node_modules/vrcx-native/build/Release",
+      "!**/node_modules/vrcx-native/deps",
+      "!**/node_modules/vrcx-native/src"
     ],
     "directories": {
       "buildResources": "assets"

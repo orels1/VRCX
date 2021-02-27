@@ -1,7 +1,11 @@
 {
+  'variables': {
+    'module_name': 'vrcx_native',
+    'module_path': './build'
+  },
   'targets': [
     {
-      'target_name': 'vrcx_native',
+      'target_name': '<(module_name)',
       'sources': [
         'src/main.cc',
         'src/addon.cc'
@@ -22,10 +26,10 @@
                   ],
                   'copies': [
                     {
-                      'destination': '<(module_root_dir)/build/Release/',
                       'files': [
                         '<(module_root_dir)/deps/openvr/bin/win64/openvr_api.dll'
-                      ]
+                      ],
+                      'destination': '<(module_path)'
                     }
                   ]
                 }
@@ -33,6 +37,21 @@
             ]
           }
         ]
+      ]
+    },
+    {
+      'target_name': 'action_after_build',
+      'type': 'none',
+      'dependencies': [
+        '<(module_name)'
+      ],
+      'copies': [
+        {
+          'files': [
+            '<(PRODUCT_DIR)/<(module_name).node',
+          ],
+          'destination': '<(module_path)'
+        }
       ]
     }
   ]
