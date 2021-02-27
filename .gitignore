@@ -1,5 +1,6 @@
 node_modules/
 assets/
 build/
+bin/
 dist/
 mix-manifest.json
