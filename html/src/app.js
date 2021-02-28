@@ -75,9 +75,9 @@ speechSynthesis.getVoices();
         }
     });
 
-    VRCXStorage.GetArray = function (key) {
+    VRCXStorage.GetArray = async function (key) {
         try {
-            var array = JSON.parse(this.Get(key));
+            var array = JSON.parse(await this.Get(key));
             if (Array.isArray(array)) {
                 return array;
             }
@@ -87,13 +87,13 @@ speechSynthesis.getVoices();
         return [];
     };
 
-    VRCXStorage.SetArray = function (key, value) {
+    VRCXStorage.SetArray = async function (key, value) {
         this.Set(key, JSON.stringify(value));
     };
 
-    VRCXStorage.GetObject = function (key) {
+    VRCXStorage.GetObject = async function (key) {
         try {
-            var object = JSON.parse(this.Get(key));
+            var object = JSON.parse(await this.Get(key));
             if (object === Object(object)) {
                 return object;
             }
@@ -103,12 +103,12 @@ speechSynthesis.getVoices();
         return {};
     };
 
-    VRCXStorage.SetObject = function (key, value) {
-        this.Set(key, JSON.stringify(value));
+    VRCXStorage.SetObject = async function (key, value) {
+        await this.Set(key, JSON.stringify(value));
     };
 
-    setInterval(function () {
-        VRCXStorage.Flush();
+    setInterval(async function () {
+        await VRCXStorage.Flush();
     }, 5 * 60 * 1000);
 
     Noty.overrideDefaults({
@@ -295,7 +295,7 @@ speechSynthesis.getVoices();
     API.eventHandlers = new Map();
 
     API.$emit = function (name, ...args) {
-        // console.log(name, ...args);
+        console.log(name, ...args);
         var handlers = this.eventHandlers.get(name);
         if (typeof handlers === 'undefined') {
             return;
@@ -839,9 +839,9 @@ speechSynthesis.getVoices();
         this.isLoggedIn = false;
     });
 
-    API.$on('USER:CURRENT', function (args) {
+    API.$on('USER:CURRENT', async function (args) {
         var { json } = args;
-        args.ref = this.applyCurrentUser(json);
+        args.ref = await this.applyCurrentUser(json);
         this.applyUser({
             id: json.id,
             username: json.username,
@@ -922,7 +922,14 @@ speechSynthesis.getVoices();
             if (json.requiresTwoFactorAuth) {
                 this.$emit('USER:2FA', args);
             } else {
-                this.$emit('USER:CURRENT', args);
+                if (this.currentUser) {
+                    this.$emit('USER:CURRENT', {
+                        ...args,
+                        ref: this.currentUser
+                    });
+                } else {
+                    this.$emit('USER:CURRENT', args);
+                }
             }
             return args;
         });
@@ -1053,7 +1060,7 @@ speechSynthesis.getVoices();
         }
     };
 
-    API.applyCurrentUser = function (json) {
+    API.applyCurrentUser = async function (json) {
         var ref = this.currentUser;
         if (this.isLoggedIn) {
             Object.assign(ref, json);
@@ -1112,7 +1119,7 @@ speechSynthesis.getVoices();
                 ref
             });
         }
-        sharedRepository.setString('current_user_status', ref.status);
+        await sharedRepository.setString('current_user_status', ref.status);
         return ref;
     };
 
@@ -1127,7 +1134,15 @@ speechSynthesis.getVoices();
             if (json.requiresTwoFactorAuth) {
                 this.$emit('USER:2FA', args);
             } else {
-                this.$emit('USER:CURRENT', args);
+                if (this.currentUser) {
+                    this.$emit('USER:CURRENT', {
+                        ...args,
+                        ref: this.currentUser,
+                    });
+                } else {
+                    this.$emit('USER:CURRENT', args);
+
+                }
             }
             return args;
         });
@@ -3649,18 +3664,18 @@ speechSynthesis.getVoices();
     $app.data.appInit = false;
     $app.data.notyInit = false;
 
-    API.$on('LOGIN', function (args) {
-        sharedRepository.setArray('wristFeed', []);
-        sharedRepository.setArray('notyFeed', []);
-        setTimeout(function () {
+    API.$on('LOGIN', async function (args) {
+        await sharedRepository.setArray('wristFeed', []);
+        await sharedRepository.setArray('notyFeed', []);
+        setTimeout(async function () {
             $app.appInit = true;
             $app.updateSharedFeed(true);
             $app.notyInit = true;
-            sharedRepository.setBool('VRInit', true);
+            await sharedRepository.setBool('VRInit', true);
         }, 10000);
     });
 
-    $app.methods.updateSharedFeed = function (forceUpdate) {
+    $app.methods.updateSharedFeed = async function (forceUpdate) {
         if (!this.appInit) {
             return;
         }
@@ -3745,8 +3760,8 @@ speechSynthesis.getVoices();
             return 0;
         });
         notyFeed.splice(5);
-        sharedRepository.setArray('wristFeed', wristFeed);
-        sharedRepository.setArray('notyFeed', notyFeed);
+        await sharedRepository.setArray('wristFeed', wristFeed);
+        await sharedRepository.setArray('notyFeed', notyFeed);
         this.playNoty(notyFeed);
         feeds.pendingUpdate = false;
     };
@@ -4604,17 +4619,17 @@ speechSynthesis.getVoices();
         }
     };
 
-    $app.methods.loadMemo = function (id) {
+    $app.methods.loadMemo = async function (id) {
         var key = `memo_${id}`;
-        return VRCXStorage.Get(key);
+        return (await VRCXStorage.Get(key));
     };
 
-    $app.methods.saveMemo = function (id, memo) {
+    $app.methods.saveMemo = async function (id, memo) {
         var key = `memo_${id}`;
         if (memo) {
-            VRCXStorage.Set(key, String(memo));
+            await VRCXStorage.Set(key, String(memo));
         } else {
-            VRCXStorage.Remove(key);
+            await VRCXStorage.Remove(key);
         }
         var ref = this.friends.get(id);
         if (ref) {
@@ -4743,6 +4758,13 @@ speechSynthesis.getVoices();
     });
 
     $app.methods.refreshFriends = function (ref, origin) {
+        if (!ref && origin) {
+            API.refreshFriends();
+            return;
+        }
+        if (!ref && !origin) {
+            return;
+        }
         var map = new Map();
         for (var id of ref.friends) {
             map.set(id, 'offline');
@@ -4774,7 +4796,7 @@ speechSynthesis.getVoices();
         }
     };
 
-    $app.methods.addFriend = function (id, state) {
+    $app.methods.addFriend = async function (id, state) {
         if (this.friends.has(id)) {
             return;
         }
@@ -4787,7 +4809,7 @@ speechSynthesis.getVoices();
             ref,
             name: '',
             no: ++this.friendsNo,
-            memo: this.loadMemo(id)
+            memo: (await this.loadMemo(id))
         };
         if (typeof ref === 'undefined') {
             ref = this.friendLog[id];
@@ -7078,9 +7100,9 @@ speechSynthesis.getVoices();
         memo: ''
     };
 
-    $app.watch['userDialog.memo'] = function () {
+    $app.watch['userDialog.memo'] = async function () {
         var D = this.userDialog;
-        this.saveMemo(D.id, D.memo);
+        await this.saveMemo(D.id, D.memo);
     };
 
     $app.methods.getFaviconUrl = function (resource) {
@@ -7255,12 +7277,12 @@ speechSynthesis.getVoices();
         D.isFavorite = false;
     });
 
-    $app.methods.showUserDialog = function (userId) {
+    $app.methods.showUserDialog = async function (userId) {
         this.$nextTick(() => adjustDialogZ(this.$refs.userDialog.$el));
         var D = this.userDialog;
         D.id = userId;
         D.treeData = [];
-        D.memo = this.loadMemo(userId);
+        D.memo = (await this.loadMemo(userId));
         D.visible = true;
         D.loading = true;
         API.getCachedUser({
